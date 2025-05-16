@@ -1,24 +1,28 @@
+require_once 'db.php';
 <?php
-   session_start();
-   include 'db.php';
+session_start();
+if (!isset($_SESSION['correct_placed'])) {
+    $_SESSION['correct_placed'] = [];
+}
 
-   $part = $_POST['part'];
-   $position = $_POST['position'];
+$data = json_decode(file_get_contents("php://input"), true);
 
-   // Check if the part is correctly placed
-   $sql = "SELECT part_name FROM puzzle_parts WHERE part_name = ?";
-   $stmt = $conn->prepare($sql);
-   $stmt->bind_param("s", $part);
-   $stmt->execute();
-   $result = $stmt->get_result();
+if (isset($data['stuk_id'], $data['positie'])) {
+    // Simpele validatie - voorbeeld: positie moet overeenkomen met vaste waarde
+    $correct_positions = [
+        'stuk1' => 'positie1',
+        'stuk2' => 'positie2',
+        // ...
+    ];
 
-   if ($result->num_rows > 0 && $part === $position) {
-       echo json_encode(['success' => true, 'message' => 'Correct geplaatst!']);
-   } else {
-       echo json_encode(['success' => false, 'message' => 'Onjuist geplaatst.']);
-   }
+    $stuk = $data['stuk_id'];
+    $positie = $data['positie'];
 
-   $stmt->close();
-   $conn->close();
-   ?>
-   
+    if (isset($correct_positions[$stuk]) && $correct_positions[$stuk] === $positie) {
+        $_SESSION['correct_placed'][$stuk] = true;
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false]);
+    }
+}
+?>
