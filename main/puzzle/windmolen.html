@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Windmolen Quiz en Puzzel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    #quiz, #puzzle, #endScreen {
+      display: none;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    #timer {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .drag-item {
+      width: 80px;
+      height: 80px;
+      margin: 10px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .drop-zone {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed #aaa;
+      display: inline-block;
+      margin: 20px;
+      vertical-align: top;
+    }
+    .correct {
+      background-color: #a5d6a7;
+    }
+    #puzzleArea {
+      background-image: url('https://cdn.pixabay.com/photo/2016/11/22/20/10/windmill-1851476_1280.jpg');
+      background-size: cover;
+      height: 400px;
+      position: relative;
+    }
+    .part-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="startScreen">
+  <h1>🌱 Welkom bij de Windmolen Quiz!</h1>
+  <p>Beantwoord vragen en verdien onderdelen om de windmolen te repareren.</p>
+  <button class="btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<div id="quiz">
+  <div id="timer">Tijd: 60</div>
+  <div class="question" id="questionText"></div>
+  <div id="answers"></div>
+</div>
+
+<div id="puzzle">
+  <h2>🛠 Repareer de Windmolen</h2>
+  <p>Sleep de vrijgespeelde onderdelen naar de juiste plek.</p>
+  <div id="puzzleArea">
+    <div class="drop-zone" data-correct="fundering" style="position: absolute; bottom: 0; left: 45%;"></div>
+    <div class="drop-zone" data-correct="mast" style="position: absolute; bottom: 100px; left: 45%;"></div>
+    <div class="drop-zone" data-correct="gondel" style="position: absolute; bottom: 200px; left: 45%;"></div>
+    <div class="drop-zone" data-correct="rotor" style="position: absolute; bottom: 200px; left: 50%;"></div>
+    <div class="drop-zone" data-correct="wiek1" style="position: absolute; bottom: 250px; left: 55%;"></div>
+    <div class="drop-zone" data-correct="wiek2" style="position: absolute; bottom: 250px; left: 50%;"></div>
+    <div class="drop-zone" data-correct="wiek3" style="position: absolute; bottom: 250px; left: 45%;"></div>
+    <div class="drop-zone" data-correct="aandrijfas" style="position: absolute; bottom: 200px; left: 40%;"></div>
+    <div class="drop-zone" data-correct="tandwielkast" style="position: absolute; bottom: 200px; left: 35%;"></div>
+    <div class="drop-zone" data-correct="generator" style="position: absolute; bottom: 200px; left: 30%;"></div>
+  </div>
+
+  <div class="part-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/1096/1096028.png" id="fundering" class="drag-item" draggable="true" title="Fundering">
+    <img src="https://cdn-icons-png.flaticon.com/512/1163/1163625.png" id="mast" class="drag-item" draggable="true" title="Mast">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="gondel" class="drag-item" draggable="true" title="Gondel">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="rotor" class="drag-item" draggable="true" title="Rotor">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="wiek1" class="drag-item" draggable="true" title="Wiek 1">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="wiek2" class="drag-item" draggable="true" title="Wiek 2">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="wiek3" class="drag-item" draggable="true" title="Wiek 3">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="aandrijfas" class="drag-item" draggable="true" title="Aandrijfas">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="tandwielkast" class="drag-item" draggable="true" title="Tandwielkast">
+    <img src="https://cdn-icons-png.flaticon.com/512/9790/9790943.png" id="generator" class="drag-item" draggable="true" title="Generator">
+  </div>
+
+  <button class="btn" onclick="checkPuzzle()">Controleer</button>
+</div>
+
+<div id="endScreen">
+  <h1>🎉 Gefeliciteerd!</h1>
+  <p>De windmolen werkt weer perfect!</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Aerogenerador_en_Texas.jpg" width="300">
+</div>
+
+<script>
+let questions = [
+  { question: "Wat is een voordeel van windenergie?", answers: ["Het veroorzaakt luchtvervuiling", "Het is hernieuwbaar", "Het kost veel brandstof"], correct: 1 },
+  { question: "Wat gebeurt er als het niet waait?", answers: ["De molen stopt", "De molen gaat sneller", "De molen gebruikt stroom"], correct: 0 },
+  { question: "Wat wordt opgewekt door een windmolen?", answers: ["Gas", "Stroom", "Warmte"], correct: 1 },
+  { question: "Wat zijn wieken?", answers: ["Een soort motor", "De draaiende bladen", "Een onderdeel van een batterij"], correct: 1 },
+  { question: "Is windenergie schoon?", answers: ["Ja", "Nee", "Soms"], correct: 0 },
+  { question: "Wat is de functie van de generator in een windmolen?", answers: ["Wind meten", "Elektriciteit opwekken", "De molen stilzetten"], correct: 1 },
+  { question: "Waarvoor dient de tandwielkast in een windmolen?", answers: ["Snelheid verhogen", "Windrichting bepalen", "Stroom opslaan"], correct: 0 },
+  { question: "Wat is de gondel van een windmolen?", answers: ["De basis", "Het huis bovenaan de toren", "Een wiek"], correct: 1 },
+  { question: "Wat is de functie van de mast?", answers: ["Ondersteunen van de gondel", "Wind vangen", "Stroom opslaan"], correct: 0 },
+  { question: "Wat doet de controller in een windmolen?", answers: ["Beheert de werking", "Verhoogt de snelheid", "Maakt geluid"], correct: 0 }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let unlockedParts = [];
+
+const partsMap = {
+  fundering: 0,
+  mast: 1,
+  gondel: 2,
+  rotor: 3,
+  wiek1: 4,
+  wiek2: 5,
+  wiek3: 6,
+  aandrijfas: 7,
+  tandwielkast: 8,
+  generator: 9
+};
+
+function startQuiz() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  showQuestion();
+  startTimer();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('questionText').innerText = q.question;
+  const answersDiv = document.getElementById('answers');
+  answersDiv.innerHTML = '';
+
+  q.answers.forEach((answer, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.innerText = answer;
+    btn.onclick = () => checkAnswer(index);
+    answersDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(index) {
+  const q = questions[currentQuestion];
+  if (index === q.correct) {
+    score++;
+    const partId = Object.keys(partsMap)[score - 1];
+    unlockedParts.push(partId);
+    enablePart(partId);
+  }
+
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    endQuiz();
+  }
+}
+
+function startTimer() {
+  let timeLeft = 60;
+  timer = setInterval(() => {
+    document.getElementById('timer').innerText = 'Tijd: ' + timeLeft;
+    timeLeft--;
+    if (timeLeft < 0) {
+      clearInterval(timer);
+      endQuiz();
+    }
+  }, 1000);
+}
+
+function endQuiz() {
+  clearInterval(timer);
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('puzzle').style.display = 'block';
+}
+
+function enablePart(id) {
+  const part = document.getElementById(id);
+  if (part) {
+    part.style.opacity = 1;
+    part.style.pointerEvents = 'auto';
+  }
+}
+
+const dragItems = document.querySelectorAll('.drag-item');
+const dropZones = document.querySelectorAll('.drop-zone');
+
+dragItems.forEach(item => {
+  item.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text/plain', e.target.id);
+  });
+});
+
+dropZones.forEach(zone => {
+  zone.addEventListener('dragover', e => {
+    e.preventDefault();
+  });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const partId = e.dataTransfer.getData('text/plain');
+    if (e.target.dataset.correct === partId) {
+      e.target.classList.add('correct');
+      const part = document.getElementById(partId);
+      part.style.opacity = 1;
+      part.style.pointerEvents = 'none';
+      e.target.appendChild(part);
+    }
+  });
+});
+
+function checkPuzzle() {
+  const totalParts = Object.keys(partsMap).length;
+  const correct = document.querySelectorAll('.drop-zone.correct').length;
+  if (correct === totalParts) {
+    document.getElementById('puzzle').style.display = 'none';
+    document.getElementById('endScreen').style.display = 'block';
+  } else {
+    alert('Nog niet alle onderdelen zitten op de juiste plek!');
+  }
+}
+</script>
+
+</body>
+</html>
