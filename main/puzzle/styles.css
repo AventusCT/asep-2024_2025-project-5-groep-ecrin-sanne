@@ -1,0 +1,62 @@
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      background-color: #45a049;
+    }
+    #quiz, #puzzle, #endScreen {
+      display: none;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    #timer {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .drag-item {
+      width: 80px;
+      height: 80px;
+      margin: 10px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .drag-item.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drop-zone {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed #aaa;
+      display: inline-block;
+      margin: 20px;
+      vertical-align: top;
+    }
+    .drop-zone.correct {
+      background-color: #a5d6a7;
+    }
+    #puzzleArea {
+      background-image: url('https://cdn.pixabay.com/photo/2016/11/22/20/10/windmill-1851476_1280.jpg');
+      background-size: cover;
+      height: 400px;
+      position: relative;
+    }
+    .part-container {
+      margin-top: 20px;
+    }
