@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="profile-pic">
+            <img src="profile.jpg" alt="Profiel">
+        </div>
+        <div class="menu">
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <div class="dropdown" id="dropdown-menu">
+                <a href="windmolen_edit.html">Windmolen Edit</a>
+                <a href="homepage_edit.html">Homepage Edit</a>
+                <a href="userpage.html">Userpage</a>
+                <a href="dashboard.html">Dashboard</a>
+                <button onclick="logout()" style="color: red;">Uitloggen</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="box homepage-box">
+            <h2>Homepage</h2>
+            <img src="homepage.jpg" alt="Homepage afbeelding" style="width: 100%; border-radius: 5px;">
+        </div>
+        <button onclick="window.location.href='homepage_edit.html'">Bekijk Homepage</button>
+        <div class="box windmolen-box">
+            <h2>Windmolenpagina</h2>
+            <img src="windmolen.jpg" alt="Windmolen afbeelding" style="width: 100%; border-radius: 5px;">
+        </div>
+        <button onclick="window.location.href='windmolen_edit.html'">Bekijk Windmolen</button>
+    </div>
+    <script>
+        function logout() {
+            window.location.href = 'inlogpagina.html';
+        }
+        function toggleMenu() {
+            document.getElementById('dropdown-menu').classList.toggle('show');
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-button')) {
+                let dropdowns = document.getElementsByClassName('dropdown');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
