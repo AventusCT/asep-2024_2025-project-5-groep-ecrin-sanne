@@ -1,21 +1,27 @@
-
-
+require_once 'db.php';
 <?php
-   session_start();
-   include 'db.php';
-   $username = $_SESSION['username'];
-   $part = $_POST['part'];
-   $cost = 10; // Cost of each puzzle piece
-   // Get user points
-   $sql = "SELECT points FROM users WHERE username = ?";
-   $stmt = $conn->prepare($sql);
-   $stmt->bind_param("s", $username);
-   $stmt->execute();
-   $stmt->bind_result($points);
-   $stmt->fetch();
-   if ($points >= $cost) {
-       // Deduct points and update user
-       $new_points = $points - $cost;
-       $sql = "UPDATE users SET points = ? WHERE username = ?";
-       $stmt = $conn->prepare($sql);
-       $stmt->bind_param("is", $new_points, $username);
+session_start();
+$stuk_id = $_POST['stuk_id'] ?? null;
+
+if (!isset($_SESSION['punten'])) $_SESSION['punten'] = 0;
+if (!isset($_SESSION['gekocht'])) $_SESSION['gekocht'] = [];
+
+$prijzen = [
+    'stuk1' => 10,
+    'stuk2' => 15,
+    // ...
+];
+
+if ($stuk_id && isset($prijzen[$stuk_id])) {
+    $prijs = $prijzen[$stuk_id];
+    if ($_SESSION['punten'] >= $prijs) {
+        $_SESSION['punten'] -= $prijs;
+        $_SESSION['gekocht'][] = $stuk_id;
+        echo json_encode(['gekocht' => true, 'punten' => $_SESSION['punten']]);
+    } else {
+        echo json_encode(['gekocht' => false, 'error' => 'Niet genoeg punten']);
+    }
+} else {
+    echo json_encode(['gekocht' => false, 'error' => 'Ongeldig stuk']);
+}
+?>

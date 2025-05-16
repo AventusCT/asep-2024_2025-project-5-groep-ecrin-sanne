@@ -1,8 +1,9 @@
+require_once 'db.php';
 <?php
    include 'db.php';
    $part = $_POST['part'];
    // Get explanation from the database
-   $sql = "SELECT explanation FROM puzzle_parts WHERE part_name = ?";
+   $sql = "SELECT text FROM puzzelstuk WHERE name = ?";
    $stmt = $conn->prepare($sql);
    $stmt->bind_param("s", $part);
    $stmt->execute();
