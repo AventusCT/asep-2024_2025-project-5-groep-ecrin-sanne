@@ -34,7 +34,7 @@
   <!-- Hero Section -->
   <section class="bg-blue-100 py-20">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl font-bold mb-4">Energie transitie</h1>
+      <h1 id="hero-title" class="text-4xl font-bold mb-4">Energie transitie</h1>
       <p class="text-lg text-gray-600 mb-6">A modern layout built with Tailwind CSS</p>
       <a href="../puzzle/windmolen.html" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Speel Puzzle</a>
     </div>
@@ -91,5 +91,22 @@
       <a href="https://linkedin.com/">Linkedin</a>
     </div>
   </footer>
+
+  <script>
+    window.onload = function () {
+      const heroTitle = localStorage.getItem('heroTitle');
+      const heroText = localStorage.getItem('heroText');
+  
+      if (heroTitle) {
+        document.getElementById('hero-title').innerText = heroTitle;
+      }
+  
+      if (heroText) {
+        document.getElementById('hero-text').innerText = heroText;
+      }
+    }
+  </script>
+  
+
 </body>
 </html>

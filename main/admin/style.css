@@ -1,144 +1,24 @@
 /* style.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Algemene stijl voor alle pagina's */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-    padding: 50px;
+.container-box {
+  @apply bg-white p-6 rounded-lg shadow max-w-md mx-auto;
 }
 
-.container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: auto;
+.input-field {
+  @apply w-full p-2.5 my-2 border border-gray-300 rounded;
 }
 
-.dashboard .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+.button-green {
+  @apply w-full p-2.5 my-2 bg-green-600 text-white rounded hover:bg-green-700;
 }
 
-.box {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
+.button-blue {
+  @apply w-full p-2.5 my-2 bg-blue-600 text-white rounded hover:bg-blue-700;
 }
 
-.homepage-box {
-    border: 2px solid green;
-}
-
-.windmolen-box {
-    border: 2px solid blue;
-}
-
-/* Inputvelden en knoppen */
-input, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-.back-button {
-    background-color: #007bff;
-}
-
-.back-button:hover {
-    background-color: #0056b3;
-}
-
-/* Logo */
-.logo {
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.logo img {
-    max-width: 150px;
-}
-
-/* Navigatiebalk */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 10px 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.profile-pic img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.menu {
-    position: relative;
-    display: inline-block;
-}
-
-.menu-button {
-    font-size: 24px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: #808080;
-}
-
-.menu-button:hover {
-    color: #28a745;
-}
-
-.dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    min-width: 150px;
-    text-align: left;
-}
-
-.dropdown a, .dropdown button {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-}
-
-.dropdown a:hover, .dropdown button:hover {
-    background: #f4f4f4;
-}
-
-.show {
-    display: block;
+.dropdown-item {
+  @apply block px-4 py-2 hover:bg-gray-100 text-left w-full;
 }

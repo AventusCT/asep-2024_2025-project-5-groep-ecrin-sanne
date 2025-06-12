@@ -1,58 +1,68 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="navbar">
-        <div class="profile-pic">
-            <img src="profile.jpg" alt="Profiel">
-        </div>
-        <div class="menu">
-            <button class="menu-button" onclick="toggleMenu()">☰</button>
-            <div class="dropdown" id="dropdown-menu">
-                <a href="windmolen_edit.html">Windmolen Edit</a>
-                <a href="homepage_edit.html">Homepage Edit</a>
-                <a href="userpage.html">Userpage</a>
-                <a href="dashboard.html">Dashboard</a>
-                <button onclick="logout()" style="color: red;">Uitloggen</button>
-            </div>
-        </div>
+<body class="bg-gray-100 text-gray-800 font-sans p-6">
+
+  <!-- Navigatiebalk -->
+  <div class="flex justify-between items-center bg-white p-4 shadow mb-8">
+    <div class="w-10 h-10 rounded-full overflow-hidden">
+      <img src="profile.jpg" alt="Profiel" class="w-full h-full object-cover" />
     </div>
-    <div class="container">
-        <div class="box homepage-box">
-            <h2>Homepage</h2>
-            <img src="homepage.jpg" alt="Homepage afbeelding" style="width: 100%; border-radius: 5px;">
-        </div>
-        <button onclick="window.location.href='homepage_edit.html'">Bekijk Homepage</button>
-        <div class="box windmolen-box">
-            <h2>Windmolenpagina</h2>
-            <img src="windmolen.jpg" alt="Windmolen afbeelding" style="width: 100%; border-radius: 5px;">
-        </div>
-        <button onclick="window.location.href='windmolen_edit.html'">Bekijk Windmolen</button>
+    <div class="relative">
+      <button onclick="toggleMenu()" class="text-2xl text-gray-600 hover:text-green-600 focus:outline-none">☰</button>
+      <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white shadow rounded hidden z-50">
+        <a href="windmolen_edit.html" class="block px-4 py-2 hover:bg-gray-100">Windmolen Edit</a>
+        <a href="homepage_edit.html" class="block px-4 py-2 hover:bg-gray-100">Homepage Edit</a>
+        <a href="userpage.html" class="block px-4 py-2 hover:bg-gray-100">Userpage</a>
+        <a href="dashboard.html" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+        <button onclick="logout()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">Uitloggen</button>
+      </div>
     </div>
-    <script>
-        function logout() {
-            window.location.href = 'inlogpagina.html';
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="max-w-xl mx-auto space-y-6">
+    
+    <div class="bg-white border-2 border-green-600 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Homepage</h2>
+      <img src="homepage.jpg" alt="Homepage afbeelding" class="w-full rounded mb-4"/>
+      <button onclick="window.location.href='homepage_edit.html'" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        Bekijk Homepage
+      </button>
+    </div>
+
+    <div class="bg-white border-2 border-blue-600 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Windmolenpagina</h2>
+      <img src="windmolen.jpg" alt="Windmolen afbeelding" class="w-full rounded mb-4"/>
+      <button onclick="window.location.href='windmolen_edit.html'" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        Bekijk Windmolen
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function logout() {
+      window.location.href = 'inlogpagina.html';
+    }
+
+    function toggleMenu() {
+      document.getElementById('dropdown-menu').classList.toggle('hidden');
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.menu-button')) {
+        const dropdown = document.getElementById('dropdown-menu');
+        if (!dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
         }
-        function toggleMenu() {
-            document.getElementById('dropdown-menu').classList.toggle('show');
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-button')) {
-                let dropdowns = document.getElementsByClassName('dropdown');
-                for (let i = 0; i < dropdowns.length; i++) {
-                    let openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
+      }
+    }
+  </script>
 </body>
 </html>
