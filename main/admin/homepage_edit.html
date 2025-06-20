@@ -1,61 +1,85 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage Bewerken</title>
-    <link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homepage Bewerken</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!-- Navigatiebalk -->
-    <div class="navbar">
-        <div class="profile-pic">
-            <img src="profile.jpg" alt="Profiel">
-        </div>
-        <div class="menu">
-            <button class="menu-button" onclick="toggleMenu()">☰</button>
-            <div class="dropdown" id="dropdown-menu">
-                <a href="windmolen_edit.html">Windmolen Edit</a>
-                <a href="homepage_edit.html">Homepage Edit</a>
-                <a href="userpage.html">Userpage</a>
-                <a href="dashboard.html">Dashboard</a>
-                <button onclick="logout()" style="color: red;">Uitloggen</button>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+          <div class="flex items-center gap-4">
+            <img src="profile.jpg" alt="Profiel" class="w-10 h-10 rounded-full object-cover" />
+          </div>
+          <div class="relative">
+            <button onclick="toggleMenu()" class="menu-button text-3xl px-2 py-1 hover:text-blue-500">☰</button>
+            <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg hidden z-50">
+             <a href="dashboard.html" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+              <a href="windmolen_edit.html" class="block px-4 py-2 hover:bg-gray-100">Windmolen Edit</a>
+              <a href="homepage_edit.html" class="block px-4 py-2 hover:bg-gray-100">Homepage Edit</a>
+              <a href="userpage.html" class="block px-4 py-2 hover:bg-gray-100">Userpage</a>
+              <a href="../homepage/page.html" class="block px-4 py-2 hover:bg-gray-100">Homepage</a>
+              <button onclick="logout()" class="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100">Uitloggen</button>
             </div>
+          </div>
         </div>
-    </div>
+      </header>
 
-    <!-- Hoofdinhoud -->
-    <div class="container">
-        <h2>Homepage Bewerken</h2>
-        <textarea id="homepage-text" rows="6" cols="30">Voer hier de tekst voor de homepage in...</textarea>
-        <button onclick="saveChanges()">Opslaan</button>
-    </div>
+<!-- Formulier -->
+<main class="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold mb-4">Pas de homepage aan</h2>
+  
+  <label for="hero-title" class="block mb-2 font-medium">Titel (Hero)</label>
+  <input id="hero-title" type="text" class="w-full border border-gray-300 rounded px-4 py-2 mb-4" />
 
-    <script>
-        function saveChanges() {
-            alert('Wijzigingen opgeslagen!');
-        }
+  <label for="hero-text" class="block mb-2 font-medium">Introductietekst</label>
+  <textarea id="hero-text" rows="4" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 resize-none"></textarea>
 
-        function logout() {
-            window.location.href = 'inlogpagina.html';
-        }
+  <button onclick="saveHomepage()" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+    Opslaan
+  </button>
+</main>
 
-        function toggleMenu() {
-            document.getElementById('dropdown-menu').classList.toggle('show');
-        }
+<!-- Scripts -->
+<script>
+  // Laad bestaande inhoud uit localStorage
+  window.onload = function () {
+    document.getElementById('hero-title').value = localStorage.getItem('heroTitle') || 'Energie transitie';
+    document.getElementById('hero-text').value = localStorage.getItem('heroText') || 'A modern layout built with Tailwind CSS';
+  };
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-button')) {
-                let dropdowns = document.getElementsByClassName('dropdown');
-                for (let i = 0; i < dropdowns.length; i++) {
-                    let openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
+  // Sla op in localStorage
+  function saveHomepage() {
+    const title = document.getElementById('hero-title').value;
+    const text = document.getElementById('hero-text').value;
+
+    localStorage.setItem('heroTitle', title);
+    localStorage.setItem('heroText', text);
+
+    alert('Homepage opgeslagen!');
+  }
+
+  // Toggle menu dropdown
+  function toggleMenu() {
+    document.getElementById('dropdown-menu').classList.toggle('hidden');
+  }
+
+  function logout() {
+    window.location.href = 'inlogpagina.html';
+  }
+
+  // Sluit menu als je buiten klikt
+  window.onclick = function(event) {
+    if (!event.target.closest('.menu-button') && !event.target.closest('#dropdown-menu')) {
+      const menu = document.getElementById('dropdown-menu');
+      if (menu && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+      }
+    }
+  };
+</script>
+
 </body>
 </html>
