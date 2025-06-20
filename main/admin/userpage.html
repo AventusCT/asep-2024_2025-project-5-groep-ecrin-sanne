@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - User Page</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="../homepage/pagina.html" class="text-2xl font-bold hover:text-blue-500">Energietransitie</a>
+      <nav class="space-x-4">
+        <a href="../admin/dashboard.html" class="text-gray-700 hover:text-blue-500">Dashboard</a>
+        <a href="../admin/homepage_edit.html" class="text-gray-700 hover:text-blue-500">Homepage Edit</a>
+        <a href="../admin/windmolen_edit.html" class="text-gray-700 hover:text-blue-500">Windmolen Edit</a>
+        <a href="inlogpagina.html" class="text-gray-700 hover:text-blue-500">Uitloggen</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-5xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Welkom, Admin!</h1>
+    <p class="mb-8 text-gray-700">Hier kun je gebruikers beheren en instellingen aanpassen.</p>
+
+    <!-- Simpele gebruikerslijst -->
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Gebruikerslijst</h2>
+      <table class="w-full table-auto border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border border-gray-300 px-4 py-2 text-left">Naam</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">E-mail</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Rol</th>
+            <th class="border border-gray-300 px-4 py-2">Acties</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hover:bg-gray-100">
+            <td class="border border-gray-300 px-4 py-2">Jan Jansen</td>
+            <td class="border border-gray-300 px-4 py-2">jan@example.com</td>
+            <td class="border border-gray-300 px-4 py-2">Admin</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+              <button class="text-blue-600 hover:underline">Bewerken</button>
+              <button class="text-red-600 hover:underline ml-4">Verwijderen</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-100">
+            <td class="border border-gray-300 px-4 py-2">Lisa de Vries</td>
+            <td class="border border-gray-300 px-4 py-2">lisa@example.com</td>
+            <td class="border border-gray-300 px-4 py-2">Gebruiker</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+              <button class="text-blue-600 hover:underline">Bewerken</button>
+              <button class="text-red-600 hover:underline ml-4">Verwijderen</button>
+            </td>
+          </tr>
+          <!-- Meer gebruikers hier -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-6 mt-10 text-center text-sm text-gray-600">
+    &copy; 2025 Energietransitie. Alle rechten voorbehouden.
+  </footer>
+</body>
+
+</html>
